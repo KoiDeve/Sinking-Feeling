@@ -5,21 +5,26 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// A background object that keeps track of the state of the game.
+// Parameters such as oxygen, amount of souls left, as well as achievements are also saved here.
 public class GamePlayer : MonoBehaviour
 {
-
+    // Oxygen level
     public int oxygenCounter = 0;
 
+    // Achievement parameters
     private static bool speedrunner = false, wuss = false, overTheMoon = false, savedall = false;
     private bool overBoat = false;
 
     private bool finished = false;
     public Animator canvasAnimator;
 
+    // Used for the canvas element, to display the amount of souls left + time played.
     private Slider oxygenLevel;
     public TMP_Text timerText, corpseText;
     int ms = 0, s = 0;
 
+    // Soul tracker, as well as animators for achievements.
     public List<DrownedController> corpses;
 
     private Animator _wuss;
@@ -32,27 +37,23 @@ public class GamePlayer : MonoBehaviour
     public AudioClip sfx_newAchievement;
 
 
-    // Start is called before the first frame update
+    // Ensures that there is only one object keeping track of the game.
     void Start()
     {
-
-        if (!exists)
-        {
+        if (!exists) {
             exists = true;
             DontDestroyOnLoad(this);
         }
         else {
             Destroy(this);
         }
-        /*oxygenLevel = FindObjectOfType<Slider>();
-        timerText.text = "0000.0";
-        corpseText.text = corpses.Count.ToString();
-        StopAllCoroutines();
-        StartCoroutine(StartTimer());*/
-
     }
 
-
+    // Finds the parameters needed depending on the scene.
+    // levels:
+    //   0 - Title Screen
+    //   1 - Gameplay
+    //   2 - Achievements Screen
     private void OnLevelWasLoaded(int level)
     {
         if (canvasAnimator == null) {
@@ -87,12 +88,7 @@ public class GamePlayer : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    // Updates the souls remaining, and checks to see if the player meets the win condition.
     public void UpdateCorpse() {
         for (int i = 0; i < corpses.Count; i++) {
             if (corpses[i].returnSaved()) {
@@ -109,11 +105,13 @@ public class GamePlayer : MonoBehaviour
         }
     }
 
+    // Starts the countdown to load the next scene.
     IEnumerator EndGame() {
         yield return new WaitForSeconds(4f);
         SceneManager.LoadScene("GameFinished");
     }
 
+    // A timer used for the amount of time played for the game.
     IEnumerator StartTimer() {
         ms++;
         if (ms >= 10) {
@@ -127,14 +125,13 @@ public class GamePlayer : MonoBehaviour
         }
     }
 
-    IEnumerator Achievements()
-    {
+    // Checks to see which achievements have been accomplished by the player.
+    IEnumerator Achievements() {
 
         bool newAch = false;
 
         float delayAch = 0.30f;
-        if (speedrunner)
-        {
+        if (speedrunner) {
             _speedrunner.SetInteger("ach", 2);
         }
         if (overTheMoon) {
@@ -147,10 +144,8 @@ public class GamePlayer : MonoBehaviour
             _savedALL.SetInteger("ach", 2);
         }
 
-        if (!savedall)
-        {
-            if (corpses.Count <= 0)
-            {
+        if (!savedall) {
+            if (corpses.Count <= 0) {
                 newAch = true;
                 savedall = true;
                 yield return new WaitForSeconds(delayAch);
@@ -192,12 +187,14 @@ public class GamePlayer : MonoBehaviour
 
     }
 
+    // The lose condition for the game.
     public void Lose() {
         canvasAnimator.SetBool("conditionalMet", true);
         StopAllCoroutines();
         StartCoroutine(EndGame());
     }
 
+    // Checks to see if the player swam above the boat for an achievement.
     public void SetOverBoat() {
         overBoat = true;
     }

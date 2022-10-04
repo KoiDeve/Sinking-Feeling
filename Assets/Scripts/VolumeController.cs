@@ -4,18 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
+// Controls the volume for the game. Is carried throughout the game.
 public class VolumeController : MonoBehaviour
 {
 
+    // Volume levels, canvas elements, mixers, and current states of the object that holds this script.
     static bool exists = false;
-
     float overallVolume = 0.8f;
-
     public AudioMixer currentVolume;
-
     private Slider slider;
-    //private CanvasGroup alphaValue;
 
+    // Checks to make sure only one object exists in the game. Finds all necessary components.
     private void Start()
     {
         if (exists)
@@ -27,15 +26,14 @@ public class VolumeController : MonoBehaviour
             slider.value = overallVolume;
             currentVolume.SetFloat("master", -30);
             slider.value = -30;
-            //alphaValue = GetComponent<CanvasGroup>();
             exists = !exists;
             DontDestroyOnLoad(this);
         }
     }
 
+    // When the title screen is loaded, loads the presets the user implemented (default values upon startup).
     private void OnLevelWasLoaded(int level)
     {
-        //alphaValue.alpha = level == 1 ? 1 : 0;
         if(level == 0) { 
             FindSlider();
             slider.value = overallVolume;
@@ -43,6 +41,7 @@ public class VolumeController : MonoBehaviour
         currentVolume.SetFloat("master", overallVolume);
     }
 
+    // Finds the slider on the title screen and gives it the permission to control the volume.
     private void FindSlider() {
         try
         {
@@ -54,6 +53,7 @@ public class VolumeController : MonoBehaviour
         }
     }
 
+    // Sets the new value of the slider for the volume levels.
     public void SetNewValue() {
         if (slider == null) {
             FindSlider();

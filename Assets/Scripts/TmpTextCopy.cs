@@ -1,11 +1,8 @@
 using UnityEngine;
 using TMPro;
 
-/// <summary>
-/// This class' intended purpose is to give a string the ability to 
-/// replicate the forefront color's text. It is an extention created after 
-/// the first release for aesthetic purposes.
-/// </summary>
+// This class' intended purpose is to give a background text the ability to replicate a 
+// forefront color's text. It is an extention created after the first release for aesthetic purposes.
 public class TmpTextCopy : MonoBehaviour
 {
 
@@ -15,10 +12,7 @@ public class TmpTextCopy : MonoBehaviour
     // Attached to the text object that will do the copying
     private TMP_Text thisText;
 
-    /// <summary>
-    ///     Checks to see if there is text to copy, otherwise 
-    ///     the component will render useless.
-    /// </summary>
+    // Checks to see if there is text to copy, otherwise the component will render useless.
     void Start()
     {
         if (textToCopy == null) {
@@ -27,7 +21,7 @@ public class TmpTextCopy : MonoBehaviour
         thisText = GetComponent<TMP_Text>();
     }
 
-    // Updates the text.
+    // Updates the text to the forefront text.
     void Update()
     {
         thisText.text = textToCopy.text;
