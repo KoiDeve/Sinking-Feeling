@@ -1,6 +1,6 @@
 # Sinking-Feeling
 
-Welcome! Sinking Feeling feature a small standalone game about a lone diver attempting to rescue lost souls. \n
+Welcome! Sinking Feeling feature a small standalone game about a lone diver attempting to rescue lost souls.  
 You will need a keyboard and a mouse to play this game! 
 
 # Available To Play On:
