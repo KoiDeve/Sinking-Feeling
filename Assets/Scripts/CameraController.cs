@@ -3,25 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
-{
+//This script is used to change the position of the camera in relation to the player of the game.
+public class CameraController : MonoBehaviour {
 
+    // Target to follow, as well as the speed and position in relation to the map
     public GameObject followTarget;
     private Vector3 fTposition;
     public float cameraMoveSpeed = 3.5f;
 
+    // Zoom elements for aesthetic, as well as the camera component
     public float zoomMax, zoomMin, zoomDivisor, zoomCut, zoomTime;
     private Camera theCamera;
-
     public float threshold_min;
 
+    // Bounds used to ensure the camera does not go out of the bounds of the map
     public BoxCollider2D bounds;
     public Vector3 minBounds, maxBounds;
     public float halfWidth, halfHeight;
 
     private bool zooming = false;
 
-    // Start is called before the first frame update
+    // Finds a target to follow, and sets the bounds to where the camera can/cannot move.
     void Start()
     {
         transform.position = followTarget.transform.position;
@@ -32,12 +34,10 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    
+        // Moves the camera component towards the player using deltaTime
+    
         fTposition = new Vector3(followTarget.transform.position.x, followTarget.transform.position.y, -10);
-
-        //Debug.LogError("This section of the code does not work. Needs fixing.");
-        //transform.position = Vector3.Lerp(fTposition, fTposition, cameraMoveSpeed * Time.deltaTime);
-        //transform.position = fTposition;
-        //Debug.LogError("This section of the code does not work. Needs fixing.");
 
         transform.position = Vector3.Lerp(transform.position, fTposition, cameraMoveSpeed * Time.deltaTime);
 
@@ -52,36 +52,9 @@ public class CameraController : MonoBehaviour
             transform.position = new Vector3(clampedX, clampedY, -10);
         }
 
-        
-            /*if (transform.position.y < threshold_min)
-            {
-                Debug.Log("Zooming in");
-                ZoomIn();
-            }
-            else {
-                Debug.Log("Zooming out");
-                ZoomOut();
-            }
-        */
-    }
-
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        StopAllCoroutines();
-            Debug.LogWarning("issure");
-            ZoomOut();
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        StopAllCoroutines();
-        Debug.LogError("issure");
-        ZoomIn();
-    }*/
-
+    // Used to zoom in the camera when the player goes underwater.
     public void ZoomIn() {
         StopAllCoroutines();
-        Debug.Log("zoomINNNN");
         zooming = true;
         if (theCamera.orthographicSize > zoomMin) {
             StopCoroutine(ZoomingOut());
@@ -89,24 +62,20 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    // Used to zoom out the camera when the player goes above the water.
     public void ZoomOut() {
         StopAllCoroutines();
-        Debug.Log("zzzommmm OUTTTT");
         zooming = true;
         if (theCamera.orthographicSize < zoomMax) {
             StopCoroutine(ZoomingIn());
             StartCoroutine(ZoomingOut());
-
         }
     }
 
-    IEnumerator ZoomingIn()
-    {
-
-            for (int i = 0; i < zoomDivisor*2; i++)
-            {
-                if (theCamera.orthographicSize <= zoomMin)
-                {
+    // A coroutine used for the timing of zooming in.
+    IEnumerator ZoomingIn() {
+            for (int i = 0; i < zoomDivisor*2; i++) {
+                if (theCamera.orthographicSize <= zoomMin) {
                     theCamera.orthographicSize = zoomMin;
                     zooming = false;
                 }
@@ -118,32 +87,25 @@ public class CameraController : MonoBehaviour
         }
 
     IEnumerator ZoomingOut() {
-
-    for (int i = 0; i < zoomDivisor*2; i++)
-    {
-        if (theCamera.orthographicSize >= zoomMax)
-        {
-            theCamera.orthographicSize = zoomMax;
-            zooming = false;
+        for (int i = 0; i < zoomDivisor*2; i++) {
+            if (theCamera.orthographicSize >= zoomMax) {
+                theCamera.orthographicSize = zoomMax;
+                zooming = false;
+            }
+            else {
+                theCamera.orthographicSize += (zoomMax - zoomMin) / zoomDivisor;
+            }
+            yield return new WaitForSeconds(zoomTime);
         }
-        else
-        {
-            theCamera.orthographicSize += (zoomMax - zoomMin) / zoomDivisor;
-        }
-        yield return new WaitForSeconds(zoomTime);
     }
 
-}
-
-    public void SetBounds()
-    {
+    // The method that sets the bounds as to how far the camera can travel
+    public void SetBounds() {
         minBounds = bounds.bounds.min;
         maxBounds = bounds.bounds.max;
-        if (bounds != null)
-        {
+        if (bounds != null) {
             halfHeight = theCamera.orthographicSize;
             halfWidth = halfHeight * Screen.width / Screen.height;
         }
     }
-
 }
