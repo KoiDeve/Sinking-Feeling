@@ -15,7 +15,7 @@ public class ZoomInfluence : MonoBehaviour {
         theCamera.ZoomOut();
     }
 
-    private void OnTriggerExit2D(Collider2D collision) 
+    private void OnTriggerExit2D(Collider2D collision) { 
         theCamera.ZoomIn();
     }
 

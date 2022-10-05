@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 //This script is used to change the position of the camera in relation to the player of the game.
@@ -21,8 +19,6 @@ public class CameraController : MonoBehaviour
     public BoxCollider2D bounds;
     public Vector3 minBounds, maxBounds;
     public float halfWidth, halfHeight;
-
-    private bool zooming = false;
 
     // Finds a target to follow, and sets the bounds to where the camera can/cannot move.
     void Start()
@@ -52,13 +48,13 @@ public class CameraController : MonoBehaviour
             float clampedX = Mathf.Clamp(transform.position.x, minBounds.x + halfWidth, maxBounds.x - halfWidth);
             float clampedY = Mathf.Clamp(transform.position.y, minBounds.y + halfHeight, maxBounds.y - halfHeight);
             transform.position = new Vector3(clampedX, clampedY, -10);
-        }
+        } 
+    }
 
-        // Used to zoom in the camera when the player goes underwater.
-        public void ZoomIn()
+    // Used to zoom in the camera when the player goes underwater.
+    public void ZoomIn()
         {
             StopAllCoroutines();
-            zooming = true;
             if (theCamera.orthographicSize > zoomMin)
             {
                 StopCoroutine(ZoomingOut());
@@ -66,11 +62,10 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        // Used to zoom out the camera when the player goes above the water.
-        public void ZoomOut()
+    // Used to zoom out the camera when the player goes above the water.
+    public void ZoomOut()
         {
             StopAllCoroutines();
-            zooming = true;
             if (theCamera.orthographicSize < zoomMax)
             {
                 StopCoroutine(ZoomingIn());
@@ -78,15 +73,14 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        // A coroutine used for the timing of zooming in.
-        IEnumerator ZoomingIn()
+    // A coroutine used for the timing of zooming in.
+    IEnumerator ZoomingIn()
         {
             for (int i = 0; i < zoomDivisor * 2; i++)
             {
                 if (theCamera.orthographicSize <= zoomMin)
                 {
                     theCamera.orthographicSize = zoomMin;
-                    zooming = false;
                 }
                 else
                 {
@@ -96,14 +90,14 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        IEnumerator ZoomingOut()
+    // A coroutine used for the timing of zooming out.
+    IEnumerator ZoomingOut()
         {
             for (int i = 0; i < zoomDivisor * 2; i++)
             {
                 if (theCamera.orthographicSize >= zoomMax)
                 {
                     theCamera.orthographicSize = zoomMax;
-                    zooming = false;
                 }
                 else
                 {
@@ -113,8 +107,8 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        // The method that sets the bounds as to how far the camera can travel
-        public void SetBounds()
+    // The method that sets the bounds as to how far the camera can travel
+    private void SetBounds()
         {
             minBounds = bounds.bounds.min;
             maxBounds = bounds.bounds.max;
@@ -124,4 +118,4 @@ public class CameraController : MonoBehaviour
                 halfWidth = halfHeight * Screen.width / Screen.height;
             }
         }
-    }
+}
