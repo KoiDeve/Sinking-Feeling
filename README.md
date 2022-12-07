@@ -1,9 +1,11 @@
 # Sinking-Feeling
 
-![alt text](https://github.com/KoiDeve/Sinking-Feeling/blob/main/Snapshots/Snapshot_0.PNG?raw=true)
-
 Welcome! Sinking Feeling feature a small game about a lone diver attempting to rescue lost souls.  
 You will need a keyboard and a mouse to play this game! 
+
+## Scroll down to learn more!
+
+![alt text](https://github.com/KoiDeve/Sinking-Feeling/blob/main/Snapshots/Snapshot_0.PNG?raw=true)
 
 ## Want to play? Click the link below to play on browser!
 https://koidev.itch.io/sinking-feeling  
