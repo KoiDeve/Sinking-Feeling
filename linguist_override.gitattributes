@@ -1,0 +1,2 @@
+# Removes custom shaders from linguist detection
+*.shader linguist-vendored
