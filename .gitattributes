@@ -1,2 +1,3 @@
 # Removes custom shaders from linguist detection
-Assets/TextMesh?Pro/* linguist-vendored
+*.cginc linguist-vendored
+*.shader linguist-vendored
