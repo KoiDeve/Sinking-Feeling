@@ -68,10 +68,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -81,8 +83,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -110,6 +112,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -496,9 +499,25 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      BlackSquareGrid_11: -7404735964311467924
+      BlackSquareGrid_15: 8298877068163648368
+      BlackSquareGrid_13: 1978041604133228726
+      BlackSquareGrid_1: -5986721531129300918
+      BlackSquareGrid_7: -3696817630753869945
+      BlackSquareGrid_3: 1341400371551637416
+      BlackSquareGrid_12: 1366441118795822205
+      BlackSquareGrid_5: 8739184958249208499
+      BlackSquareGrid_2: 6076022431910005919
+      BlackSquareGrid_0: 3198554062533747860
+      BlackSquareGrid_9: -1579075509688714233
+      BlackSquareGrid_4: -2463251173005955733
+      BlackSquareGrid_8: 6845394441007481546
+      BlackSquareGrid_10: -8062843897781291074
+      BlackSquareGrid_6: 2270437856931441973
+      BlackSquareGrid_14: 2966572201210732908
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
