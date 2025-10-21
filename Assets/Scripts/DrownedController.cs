@@ -30,7 +30,7 @@ public class DrownedController : MonoBehaviour
             {
                 if (!saved)
                 {
-                    AudioSource x = GameObject.Find("sfx_radio").GetComponent<AudioSource>();
+                    AudioSource x = GameObject.Find("sfx_resurrect").GetComponent<AudioSource>();
                     x.Stop();
                     x.clip = sfx_ressurect;
                     x.Play();

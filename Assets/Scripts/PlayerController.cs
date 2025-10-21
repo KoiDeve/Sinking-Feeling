@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour {
     private GamePlayer gamePlayer;
 
     // Audio for the swimming sounds.
-    private AudioSource sfx_source;
+    private AudioSource sfx_source_drown, sfx_source_breath, sfx_source_swim;
     public AudioClip sfx_swim, sfx_breathe, sfx_drown;
 
 
@@ -47,12 +47,12 @@ public class PlayerController : MonoBehaviour {
 
         // Used to measure the oxygen levels of the player.
         if (oxygenLevel.value <= 0) {
-            if (sfx_source == null) {
-                sfx_source = GameObject.Find("sfx_radio").GetComponent<AudioSource>();
+            if (sfx_source_drown == null) {
+                sfx_source_drown = GameObject.Find("sfx_radio").GetComponent<AudioSource>();
             }
-            sfx_source.Stop();
-            sfx_source.clip = sfx_drown;
-            sfx_source.Play();
+            sfx_source_drown.Stop();
+            sfx_source_drown.clip = sfx_drown;
+            sfx_source_drown.Play();
             StartCoroutine(Death());
         }
 
@@ -62,13 +62,13 @@ public class PlayerController : MonoBehaviour {
             myBody.gravityScale = gravityMax * transform.position.y;
             if (!floating) {
                 gamePlayer.oxygenCounter++;
-                if (sfx_source == null)
+                if (sfx_source_breath == null)
                 {
-                    sfx_source = GameObject.Find("sfx_radio").GetComponent<AudioSource>();
+                    sfx_source_breath = GameObject.Find("sfx_breathe").GetComponent<AudioSource>();
                 }
-                sfx_source.Stop();
-                sfx_source.clip = sfx_breathe;
-                sfx_source.Play();
+                sfx_source_breath.Stop();
+                sfx_source_breath.clip = sfx_breathe;
+                sfx_source_breath.Play();
             }
             floating = true;
             if (oxygenLevel.value < 500) {
@@ -91,19 +91,19 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.Space)) {
             Debug.Log("Space pressed");
             oxygenLevel.value -= 5;
-            if (sfx_source == null) {
-                sfx_source = GameObject.Find("sfx_radio").GetComponent<AudioSource>();
+            if (sfx_source_swim == null) {
+                sfx_source_swim = GameObject.Find("sfx_radio").GetComponent<AudioSource>();
             }
-            sfx_source.Stop();
-            sfx_source.clip = sfx_swim;
-            sfx_source.Play();
+            sfx_source_swim.Stop();
+            sfx_source_swim.clip = sfx_swim;
+            sfx_source_swim.Play();
 
             animator.SetTrigger("swim");
             float currentDegree = gameObject.transform.rotation.eulerAngles.z;
             Debug.Log(currentDegree);
             currentDegree = 360 - currentDegree;
             currentDegree *= Mathf.PI / 180;
-            myBody.velocity = new Vector2(Mathf.Sin(currentDegree) * playerSpeed, Mathf.Cos(currentDegree) * playerSpeed);
+            myBody.linearVelocity = new Vector2(Mathf.Sin(currentDegree) * playerSpeed, Mathf.Cos(currentDegree) * playerSpeed);
         }
     }
 
